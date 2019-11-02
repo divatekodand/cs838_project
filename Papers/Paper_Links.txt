@@ -1,0 +1,30 @@
+DEPTH ESTIMATION
+
+
+Depth Prediction Without the Sensors: Leveraging Structure for Unsupervised
+Learning from Monocular Videos
+https://sites.google.com/view/struct2depth
+
+
+Unsupervised Learning of Depth and Ego-Motion from Monocular Video
+Using 3D Geometric Constraints
+http://openaccess.thecvf.com/content_cvpr_2018/papers/Mahjourian_Unsupervised_Learning_of_CVPR_2018_paper.pdf
+
+Unsupervised Learning of Depth and Ego-Motion from Video
+https://people.eecs.berkeley.edu/~tinghuiz/projects/SfMLearner/cvpr17_sfm_final.pdf
+
+Unsupervised Adversarial Depth Estimation using Cycled Generative Networks
+https://arxiv.org/pdf/1807.10915v1.pdf
+
+Fusion of Camera and Lidar Data for Object Detection using Neural Networks
+https://www.uni-das.de/images/pdf/veroeffentlichungen/2018/14_Fusion%20of%20Camera%20and%20Lidar%20Data%20for%20Object%20Detection%20using%20Neural%20Networks.pdf
+
+Perspective Transformer Nets: Learning Single-View
+3D Object Reconstruction without 3D Supervision
+https://arxiv.org/pdf/1612.00814.pdf
+
+Better to Follow, Follow to Be Better: Towards Precise Supervision of Feature
+Super-Resolution for Small Object Detection
+http://vision.snu.ac.kr/project_pages/iccv19_noh/data/iccv19_noh.pdf
+
+
