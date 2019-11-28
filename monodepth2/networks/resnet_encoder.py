@@ -96,3 +96,34 @@ class ResnetEncoder(nn.Module):
         self.features.append(self.encoder.layer4(self.features[-1]))
 
         return self.features
+
+
+class EncodingModule(nn.Module):
+    """Pytorch module for a resnet encoder
+    """
+    def __init__(self, num_layers, pretrained, num_input_images=1):
+        super(EncodingModule, self).__init__()
+        self.image_encoder =  ResnetEncoder(
+            num_layers, False)
+        loaded_dict_enc =  torch.load('../models/mono_640x192/encoder.pth', map_location='cpu')
+        filtered_dict_enc = {k: v for k, v in loaded_dict_enc.items() if k in self.image_encoder.state_dict()}
+        self.image_encoder.load_state_dict(filtered_dict_enc)
+        self.freeze(self.image_encoder)
+        print(loaded_dict_enc['height'])
+        print(loaded_dict_enc['width'])
+        self.lidar_encoder =  ResnetEncoder(
+            num_layers, True)
+
+    def freeze(self, model):
+        for param in model.parameters():
+            param.requires_grad = False
+
+    def forward(self, input_image, lidar_image):
+        self.features = []
+        image_features = self.image_encoder(input_image)
+        lidar_features = self.lidar_encoder(lidar_image)
+        self.features = image_features + lidar_features
+
+        return self.features
+    
+a = EncodingModule(18, True)
