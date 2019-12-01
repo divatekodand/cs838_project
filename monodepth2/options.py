@@ -203,6 +203,25 @@ class MonodepthOptions:
                                       "from the original monodepth paper",
                                  action="store_true")
 
+        # DEPTH SUPERVISION OPTIONS
+        self.parser.add_argument("--depth_supervision",
+                                 help="Supervise Encoder with LIDAR Depth Map",
+                                 action="store_true")
+        self.parser.add_argument("--img_pretrained",
+                                 help="Use pretrained image encoder",
+                                 action="store_true")
+        self.parser.add_argument("--lidar_pretrained",
+                                 help="Use pretrained lidar encoder",
+                                 action="store_true")
+        self.parser.add_argument("--img_model_path",
+                                 type=str,
+                                 help="pretrained",
+                                 default="./models/mono_640x192/encoder.pth")
+        self.parser.add_argument("--lidar_model_path",
+                                 type=str,
+                                 help="pretrained",
+                                 default="./models/mono_640x192/lidar.pth")
+
     def parse(self):
         self.options = self.parser.parse_args()
         return self.options

@@ -100,23 +100,29 @@ class ResnetEncoder(nn.Module):
 
 class EncodingModule(nn.Module):
     """Pytorch module for a resnet encoder
+    pretrained = dict - {'img':True, 'lidar':false}
     """
     def __init__(self, num_layers, pretrained, model_path, num_input_images=1):
         super(EncodingModule, self).__init__()
         self.image_encoder =  ResnetEncoder(
             num_layers, False)
+
         # loaded_dict_enc = torch.load('../models/mono_640x192/encoder.pth', map_location='cpu')
         loaded_dict_enc = torch.load(model_path, map_location='cpu')
         filtered_dict_enc = {k: v for k, v in loaded_dict_enc.items() if k in self.image_encoder.state_dict()}
         self.image_encoder.load_state_dict(filtered_dict_enc)
-        self.freeze(self.image_encoder)
-        print(loaded_dict_enc['height'])
-        print(loaded_dict_enc['width'])
+        if pretrained['img']:
+            self.freeze(self.image_encoder)
+
+        print('Encoding Module Expected Image height - ', loaded_dict_enc['height'])
+        print('Encoding Module Expected Image width - ', loaded_dict_enc['width'])
+
         self.lidar_encoder = ResnetEncoder(
             num_layers, True)
         # TODO:Learn parameters for encoder
         # self.lidar_encoder.load_state_dict(filtered_dict_enc)
-        self.freeze(self.lidar_encoder)
+        if pretrained['lidar']:
+            self.freeze(self.lidar_encoder)
 
     def freeze(self, model):
         for param in model.parameters():
@@ -139,4 +145,4 @@ class EncodingModule(nn.Module):
 
 
 if __name__ == "__main__":
-    a = EncodingModule(18, True)
+    a = EncodingModule(18, {'img':True, 'lidar':False})
