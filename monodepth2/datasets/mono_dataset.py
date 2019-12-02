@@ -193,14 +193,14 @@ class MonoDataset(data.Dataset):
             inputs["depth_gt"] = depth_gt
             # print("after resize - ", inputs["depth_gt"].shape)
             # print("height and width - ", self.height, "   ", self.width)
-            inputs["depth_ds"] = np.expand_dims(inputs["depth_gt"], 0)
+            inputs["depth_ds"] = np.expand_dims(inputs["depth_ds"], 0)
             inputs["depth_gt"] = np.expand_dims(inputs["depth_gt"], 0)
 
-            inputs["depth_ds"] = inputs["depth_gt"].astype(np.float32)
+            inputs["depth_ds"] = inputs["depth_ds"].astype(np.float32)
             inputs["depth_gt"] = inputs["depth_gt"].astype(np.float32)
             # print('input depth -', inputs["depth_gt"].shape)
 
-            inputs["depth_ds"] = inputs["depth_ds"].astype(np.float32)
+            inputs["depth_ds"] = torch.from_numpy(inputs["depth_ds"])
             inputs["depth_gt"] = torch.from_numpy(inputs["depth_gt"])
 
         if "s" in self.frame_idxs:
