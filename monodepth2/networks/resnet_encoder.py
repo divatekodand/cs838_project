@@ -107,7 +107,7 @@ class EncodingModule(nn.Module):
 
         self.num_ch_enc = np.array([64, 64, 128, 256, 512])
 
-        self.image_encoder =  ResnetEncoder(
+        self.image_encoder = ResnetEncoder(
             num_layers, False)
 
         # loaded_dict_enc = torch.load('../models/mono_640x192/encoder.pth', map_location='cpu')
@@ -120,8 +120,8 @@ class EncodingModule(nn.Module):
         print('Encoding Module Expected Image height - ', loaded_dict_enc['height'])
         print('Encoding Module Expected Image width - ', loaded_dict_enc['width'])
 
-        self.lidar_encoder = ResnetEncoder(
-            num_layers, True)
+        self.lidar_encoder = ResnetEncoder(num_layers, True)
+        self.lidar_encoder.load_state_dict(filtered_dict_enc)
         self.lidar_encoder.encoder.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
         # TODO:Learn parameters for encoder
         # self.lidar_encoder.load_state_dict(filtered_dict_enc)
