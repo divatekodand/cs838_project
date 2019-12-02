@@ -122,6 +122,7 @@ class EncodingModule(nn.Module):
 
         self.lidar_encoder = ResnetEncoder(
             num_layers, True)
+        self.lidar_encoder.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
         # TODO:Learn parameters for encoder
         # self.lidar_encoder.load_state_dict(filtered_dict_enc)
         if pretrained['lidar']:
