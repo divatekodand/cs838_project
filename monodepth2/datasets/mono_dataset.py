@@ -188,7 +188,8 @@ class MonoDataset(data.Dataset):
             depth_gt = self.get_depth(folder, frame_index, side, do_flip)
             inputs["depth_gt"] = np.expand_dims(depth_gt, 0)
 
-            inputs["depth_gt"] = self.resize[0](torch.from_numpy(inputs["depth_gt"].astype(np.float32)))
+            inputs["depth_gt"] = torch.from_numpy(inputs["depth_gt"].astype(np.float32))
+            torch.nn.functional.interpolate(inputs["depth_gt"], size=(1, 1, self.height, self.width), scale_factor=None, mode='bilinear', align_corners=None)
 
         if "s" in self.frame_idxs:
             stereo_T = np.eye(4, dtype=np.float32)
