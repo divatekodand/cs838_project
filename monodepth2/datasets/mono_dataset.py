@@ -188,12 +188,12 @@ class MonoDataset(data.Dataset):
 
         if self.load_depth:
             depth_gt = self.get_depth(folder, frame_index, side, do_flip)
+            inputs["depth_gt"] = cv2.resize(depth_gt, (self.width, self.height), interpolation=cv2.INTER_LINEAR)
             inputs["depth_gt"] = np.expand_dims(depth_gt, 0)
 
             inputs["depth_gt"] = inputs["depth_gt"].astype(np.float32)
             print('input depth -', inputs["depth_gt"].shape)
-            inputs["depth_gt"] = torch.from_numpy(
-                cv2.resize(inputs["depth_gt"], (self.width, self.height), interpolation=cv2.INTER_LINEAR))
+            inputs["depth_gt"] = torch.from_numpy(inputs["depth_gt"])
 
         if "s" in self.frame_idxs:
             stereo_T = np.eye(4, dtype=np.float32)
