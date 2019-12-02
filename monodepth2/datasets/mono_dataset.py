@@ -190,7 +190,7 @@ class MonoDataset(data.Dataset):
             depth_gt = self.get_depth(folder, frame_index, side, do_flip)
             print("before resize - ", depth_gt.shape)
             inputs["depth_gt"] = cv2.resize(depth_gt, (self.width, self.height), interpolation=cv2.INTER_LINEAR)
-            print("after resize - ", input["depth_gt"].shape)
+            print("after resize - ", inputs["depth_gt"].shape)
             print("height and width - ", self.height, "   ", self.width)
             inputs["depth_gt"] = np.expand_dims(depth_gt, 0)
 
