@@ -52,7 +52,7 @@ class Trainer:
             self.opt.frame_ids.append("s")
 
         if self.opt.depth_supervision:
-            self.pretrained = {'img':self.opt.img_pretrained, 'lidar'self.opt.lidar_pretrained }
+            self.pretrained = {'img':self.opt.img_pretrained, 'lidar': self.opt.lidar_pretrained }
             self.models["encoder"] = networks.EncodingModule(self.opt.num_layers, self.pretrained, self.opt.img_model_path)
         else:
             self.models["encoder"] = networks.ResnetEncoder(
