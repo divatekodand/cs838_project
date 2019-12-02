@@ -54,6 +54,7 @@ class Trainer:
         if self.opt.depth_supervision:
             self.pretrained = {'img':self.opt.img_pretrained, 'lidar': self.opt.lidar_pretrained }
             self.models["encoder"] = networks.EncodingModule(self.opt.num_layers, self.pretrained, self.opt.img_model_path)
+            self.models["encoder"].lidar_encoder.encoder.to(self.device)
         else:
             self.models["encoder"] = networks.ResnetEncoder(
                 self.opt.num_layers, self.opt.weights_init == "pretrained")
