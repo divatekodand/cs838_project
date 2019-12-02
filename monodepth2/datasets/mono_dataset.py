@@ -192,7 +192,7 @@ class MonoDataset(data.Dataset):
             inputs["depth_gt"] = cv2.resize(depth_gt, (self.width, self.height), interpolation=cv2.INTER_LINEAR)
             print("after resize - ", inputs["depth_gt"].shape)
             print("height and width - ", self.height, "   ", self.width)
-            inputs["depth_gt"] = np.expand_dims(depth_gt, 0)
+            inputs["depth_gt"] = np.expand_dims(inputs["depth_gt"], 0)
 
             inputs["depth_gt"] = inputs["depth_gt"].astype(np.float32)
             print('input depth -', inputs["depth_gt"].shape)
