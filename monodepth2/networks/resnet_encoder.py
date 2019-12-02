@@ -104,6 +104,9 @@ class EncodingModule(nn.Module):
     """
     def __init__(self, num_layers, pretrained, model_path, num_input_images=1):
         super(EncodingModule, self).__init__()
+
+        self.num_ch_enc = np.array([64, 64, 128, 256, 512])
+
         self.image_encoder =  ResnetEncoder(
             num_layers, False)
 
