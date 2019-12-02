@@ -249,7 +249,7 @@ class Trainer:
             outputs = self.models["depth"](features[0])
         else:
             # Otherwise, we only feed the image with frame_id 0 through the depth encoder
-            if self.opt.depth_supervison:
+            if self.opt.depth_supervision:
                 features = self.models["encoder"](inputs["color_aug", 0, 0], inputs['depth_gt'])
             else:
                 features = self.models["encoder"](inputs["color_aug", 0, 0])
