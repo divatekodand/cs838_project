@@ -1,4 +1,10 @@
 # Monodepth2
+FOr depth_supervision evaluation, run the following command:
+python evaluate_depth.py --png --load_weights_folder /home/divatekodand/tmp/depth_supervision/models/weights_19/ --eval_mono --depth_supervision
+
+For normal evaluation, run the following command:
+python evaluate_depth.py --png --load_weights_folder models/mono_640x192/ --eval_mono
+
 
 This is the reference PyTorch implementation for training and testing depth estimation models using the method described in
 

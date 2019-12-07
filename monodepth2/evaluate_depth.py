@@ -82,11 +82,14 @@ def evaluate(opt):
 
         dataset = datasets.KITTIRAWDataset(opt.data_path, filenames,
                                            encoder_dict['height'], encoder_dict['width'],
-                                           [0], 4, is_train=False)
+                                           [0], 4, is_train=False, img_ext='.png')
         dataloader = DataLoader(dataset, 16, shuffle=False, num_workers=opt.num_workers,
                                 pin_memory=True, drop_last=False)
 
-        encoder = networks.EncodingModule(opt.num_layers, False, '../models/mono_640x192/encoder.pth')
+        if opt.depth_supervision:
+            encoder = networks.EncodingModule(opt.num_layers, {'img':False, 'lidar':False}, 'models/mono_640x192/encoder.pth' )
+        else:
+            encoder = networks.ResnetEncoder(opt.num_layers, False)
         depth_decoder = networks.DepthDecoder(encoder.num_ch_enc)
 
         model_dict = encoder.state_dict()
@@ -105,13 +108,18 @@ def evaluate(opt):
 
         with torch.no_grad():
             for data in dataloader:
-                input_color = data[("color", 0, 0)].cuda()
+                input_color = data[("color_aug", 0, 0)].cuda()
+                input_depth = data[("depth_ds")].cuda()
 
                 if opt.post_process:
                     # Post-processed results require each image to have two forward passes
                     input_color = torch.cat((input_color, torch.flip(input_color, [3])), 0)
 
-                output = depth_decoder(encoder(input_color))
+                if opt.depth_supervision:
+                    output = depth_decoder(encoder(input_color, input_depth))
+                else:
+                    output = depth_decoder(encoder(input_color))
+
 
                 pred_disp, _ = disp_to_depth(output[("disp", 0)], opt.min_depth, opt.max_depth)
                 pred_disp = pred_disp.cpu()[:, 0].numpy()
@@ -163,7 +171,8 @@ def evaluate(opt):
         quit()
 
     gt_path = os.path.join(splits_dir, opt.eval_split, "gt_depths.npz")
-    gt_depths = np.load(gt_path, fix_imports=True, encoding='latin1')["data"]
+    print(gt_path)
+    gt_depths = np.load(gt_path, allow_pickle=True, fix_imports=True, encoding='latin1')["data"]
 
     print("-> Evaluating")
 
