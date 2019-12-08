@@ -221,7 +221,13 @@ class MonodepthOptions:
                                  type=str,
                                  help="pretrained",
                                  default="./models/mono_640x192/lidar.pth")
-
+        self.parser.add_argument("--obj3d",
+                                 help="Use 3d object detection benchmark dataset",
+                                 action="store_true")
+        self.parser.add_argument("--obj3dpath",
+                                 type=str,
+                                 help="Use 3d object detection benchmark dataset",
+                                 default="/home/divatekodand/kitti_3d_obj_det/data/object")
     def parse(self):
         self.options = self.parser.parse_args()
         return self.options
