@@ -100,6 +100,18 @@ class KITTI3DDataset(KITTIDataset):
             folder,
             "velodyne/{:06d}.bin".format(int(frame_index)))
 
+    def check_depth(self):
+        line = self.filenames[0].split()
+        scene_name = line[0]
+        frame_index = int(line[1])
+
+        velo_filename = os.path.join(
+            self.data_path,
+            scene_name,
+            "velodyne/{:06d}.bin".format(int(frame_index)))
+
+        return os.path.isfile(velo_filename)
+
         depth_gt = generate_depth_map(calib_path, velo_filename, self.side_map[side])
         depth_gt = skimage.transform.resize(
             depth_gt, self.full_res_shape[::-1], order=0, preserve_range=True, mode='constant')
