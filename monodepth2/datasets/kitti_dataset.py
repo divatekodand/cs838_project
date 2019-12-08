@@ -100,6 +100,15 @@ class KITTI3DDataset(KITTIDataset):
             folder,
             "velodyne/{:06d}.bin".format(int(frame_index)))
 
+        depth_gt = generate_depth_map(calib_path, velo_filename, self.side_map[side])
+        depth_gt = skimage.transform.resize(
+            depth_gt, self.full_res_shape[::-1], order=0, preserve_range=True, mode='constant')
+
+        if do_flip:
+            depth_gt = np.fliplr(depth_gt)
+
+        return depth_gt
+
     def check_depth(self):
         line = self.filenames[0].split()
         scene_name = line[0]
@@ -111,16 +120,6 @@ class KITTI3DDataset(KITTIDataset):
             "velodyne/{:06d}.bin".format(int(frame_index)))
 
         return os.path.isfile(velo_filename)
-
-        depth_gt = generate_depth_map(calib_path, velo_filename, self.side_map[side])
-        depth_gt = skimage.transform.resize(
-            depth_gt, self.full_res_shape[::-1], order=0, preserve_range=True, mode='constant')
-
-        if do_flip:
-            depth_gt = np.fliplr(depth_gt)
-
-        return depth_gt
-
 
 
 
