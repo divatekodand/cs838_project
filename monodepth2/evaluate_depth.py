@@ -144,6 +144,7 @@ def evaluate(opt):
 
                 if opt.depth_supervision:
                     depth_map = _
+                    depth_map = depth_map.cpu().numpy()
                     pred_depths.append(depth_map)
 
         pred_disps = np.concatenate(pred_disps)
