@@ -86,7 +86,7 @@ def evaluate(opt):
 
         if opt.depth_supervision and opt.obj3d:
             print("kitti obj det")
-            dataset = datasets.KITTIRAWDataset(opt.data_path, filenames,
+            dataset = datasets.KITTI3DDataset(opt.data_path, filenames,
                                                encoder_dict['height'], encoder_dict['width'],
                                                [0], 4, is_train=False, img_ext='.png')
         else:
