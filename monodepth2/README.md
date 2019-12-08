@@ -1,4 +1,8 @@
 # Monodepth2
+
+For saving the disparities on 3D object detection dataset - 
+python evaluate_depth.py --png --load_weights_folder /home/divatekodand/tmp/depth_supervision/models/weights_19/ --eval_mono --depth_supervision --obj3d --data_path /home/divatekodand/kitti_3d_obj_det/data/object/ --no_eval --save_pred_disps
+
 FOr depth_supervision evaluation, run the following command:
 python evaluate_depth.py --png --load_weights_folder /home/divatekodand/tmp/depth_supervision/models/weights_19/ --eval_mono --depth_supervision
 
@@ -6,7 +10,7 @@ For normal evaluation, run the following command:
 python evaluate_depth.py --png --load_weights_folder models/mono_640x192/ --eval_mono
 
 
-This is the reference PyTorch implementation for training and testing depth estimation models using the method described in
+This is the reference PyTorch implementation for training and testingpython evaluate_depth.py --png --load_weights_folder /home/divatekodand/tmp/depth_supervision/models/weights_19/ --eval_mono --depth_supervision --obj3d --data_path /home/divatekodand/kitti_3d_obj_det/data/object/ --no_eval --save_pred_disps depth estimation models using the method described in
 
 > **Digging into Self-Supervised Monocular Depth Prediction**
 >
