@@ -74,7 +74,7 @@ def evaluate(opt):
 
         print("-> Loading weights from {}".format(opt.load_weights_folder))
 
-        if opt.depth_supervision and obj.obj3d:
+        if opt.depth_supervision and opt.obj3d:
             filenames = readlines(os.path.join(opt.obj3dpath, "test_files.txt"))
         else:
             filenames = readlines(os.path.join(splits_dir, opt.eval_split, "test_files.txt"))
