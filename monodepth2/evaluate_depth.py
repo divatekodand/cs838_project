@@ -113,6 +113,9 @@ def evaluate(opt):
 
         pred_disps = []
 
+        if opt.depth_supervision:
+            pred_depths = []
+
         print("-> Computing predictions with size {}x{}".format(
             encoder_dict['width'], encoder_dict['height']))
 
@@ -130,7 +133,6 @@ def evaluate(opt):
                 else:
                     output = depth_decoder(encoder(input_color))
 
-
                 pred_disp, _ = disp_to_depth(output[("disp", 0)], opt.min_depth, opt.max_depth)
                 pred_disp = pred_disp.cpu()[:, 0].numpy()
 
@@ -140,7 +142,14 @@ def evaluate(opt):
 
                 pred_disps.append(pred_disp)
 
+                if opt.depth_supervision:
+                    depth_map = _
+                    pred_depths.append(depth_map)
+
         pred_disps = np.concatenate(pred_disps)
+
+        if opt.depth_supervision:
+            pred_depths = np.concatenate(pred_depths)
 
     else:
         # Load predictions from file
@@ -158,6 +167,12 @@ def evaluate(opt):
             opt.load_weights_folder, "disps_{}_split.npy".format(opt.eval_split))
         print("-> Saving predicted disparities to ", output_path)
         np.save(output_path, pred_disps)
+
+        if opt.depth_supervision:
+            output_depth_path = os.path.join(
+                opt.load_weights_folder, "depth_{}_split.npy".format(opt.eval_split))
+            print("-> Saving predicted depth to ", output_depth_path)
+            np.save(output_depth_path, pred_depths)
 
     if opt.no_eval:
         print("-> Evaluation disabled. Done.")
