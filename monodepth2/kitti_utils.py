@@ -22,6 +22,8 @@ def read_calib_file(path):
     data = {}
     with open(path, 'r') as f:
         for line in f.readlines():
+            if line == '\n':
+                continue
             key, value = line.split(':', 1)
             value = value.strip()
             data[key] = value
@@ -43,12 +45,21 @@ def sub2ind(matrixSize, rowSub, colSub):
     return rowSub * (n-1) + colSub - 1
 
 
-def generate_depth_map(calib_dir, velo_filename, cam=2, vel_depth=False):
+def generate_depth_map(calib_dir, velo_filename, cam=2, vel_depth=False, dyn=False):
     """Generate a depth map from velodyne data
     """
     # load calibration files
-    cam2cam = read_calib_file(os.path.join(calib_dir, 'calib_cam_to_cam.txt'))
-    velo2cam = read_calib_file(os.path.join(calib_dir, 'calib_velo_to_cam.txt'))
+    if dyn:
+        cam2cam_file = velo_filename.split('/')[-1]
+        cam2cam_file = cam2cam_file.split('.')[0]
+        velo2cam_file = cam2cam_file
+        cam2cam_file += 'cam_to_cam.txt'
+        velo2cam_file += 'velo_to_cam.txt'
+        cam2cam = read_calib_file(os.path.join(calib_dir, cam2cam_file))
+        velo2cam = read_calib_file(os.path.join(calib_dir, velo2cam_file))
+    else:
+        cam2cam = read_calib_file(os.path.join(calib_dir, 'calib_cam_to_cam.txt'))
+        velo2cam = read_calib_file(os.path.join(calib_dir, 'calib_velo_to_cam.txt'))
     velo2cam = np.hstack((velo2cam['R'].reshape(3, 3), velo2cam['T'][..., np.newaxis]))
     velo2cam = np.vstack((velo2cam, np.array([0, 0, 0, 1.0])))
 

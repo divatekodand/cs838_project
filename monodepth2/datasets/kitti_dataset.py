@@ -91,7 +91,7 @@ class KITTI3DDataset(KITTIDataset):
             self.data_path, folder, "image_{}".format(self.side_map[side]), f_str)
         return image_path
 
-    def get_depth(self, folder, frame_index, side, do_flip):
+    def get_depth(self, folder, frame_index, side, do_flip, dyn=True):
         calib_path = os.path.join(self.data_path, folder.split("/")[0])
 
         # data_path - object, folder - testing
