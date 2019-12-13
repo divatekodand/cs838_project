@@ -8,7 +8,9 @@ import sys
 import scipy.spatial as scsp
 
 
-def get_pseudo_points(depth_map, v_points, filter_points=False):
+'''Module to generate Pseudo point cloud from depth maps'''
+
+def get_pseudo_points(depth_map, v_points, filter_points=False, threshold=0.1):
     MATRIX_P2 = np.array([[719.787081, 0., 608.463003, 44.9538775],
                           [0., 719.787081, 174.545111, 0.1066855],
                           [0., 0., 1., 3.0106472e-03],
@@ -27,7 +29,7 @@ def get_pseudo_points(depth_map, v_points, filter_points=False):
     if filter_points:
         tree = scsp.KDTree(v_points[:, 0:3])
         for i in range(points_arr.shape[0]):
-            n_neighbors = tree.query_ball_point(points_arr[i, 0:3], 0.1)
+            n_neighbors = tree.query_ball_point(points_arr[i, 0:3], threshold)
             if len(n_neighbors) < 1:
                 points_arr[i, 3] = 0
 
