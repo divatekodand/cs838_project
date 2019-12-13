@@ -14,5 +14,7 @@ If you want to evaluate depthmap predcition using the existing approach, run the
 python evaluate\_depth.py --png --load\_weights\_folder models/mono\_640x192/ --eval\_mono 
 
 TO evaluate 3D object detection, do the following:
+cd PointRCNN
+python eval\_rcnn.py --cfg\_file cfgs/default.yaml --ckpt PointRCNN.pth --batch\_size 1 --eval\_mode rcnn --set RPN.LOC\_XZ\_FINE False
 
 
