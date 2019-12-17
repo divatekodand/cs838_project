@@ -1,6 +1,6 @@
 # Robust 3D Object Detection for Autonomous Vehicles using Sensor Fusion
 
-# To train the depthmap prediction architecture, do the following:
+# To train the proposed depthmap prediction architecture:
 
 1. To reproduce the baseline results from the original paper follow the README instructions in monodepth2 directory
 
