@@ -63,3 +63,8 @@ mv ~/kitti_3d_obj_det/data ./PointRCNN/
 cd PointRCNN
 python eval\_rcnn.py --cfg\_file cfgs/default.yaml --ckpt PointRCNN.pth --batch\_size 1 --eval\_mode rcnn --set RPN.LOC\_XZ\_FINE False
 ```
+
+# To visualize generated point cloud
+```
+python pc_vis.py path_to_bin_file
+```
