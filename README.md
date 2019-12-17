@@ -2,7 +2,7 @@
 
 > **cs838_Project**
 
-# Use depth_prediction branch for more instructions and to reproducte the results
+> **Use depth_prediction branch for more instructions and to reproducte the results**
 
 
 
