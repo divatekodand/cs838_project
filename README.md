@@ -20,7 +20,7 @@ python evaluate_depth.py --load_weights_folder ~/path_to_trained_weights --eval_
 1. Download KITTI 3D Object detection Benchmark dataset
 ```
 cd kitti_3d_obj_det
-python ./download_kitty.py
+python ./download_kitti.py
 ```
 
 2. Make sure that the the KITTI 3D Object detection Benchmark dataset has the following directory structure - 
